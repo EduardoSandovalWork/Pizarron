@@ -160,6 +160,7 @@
         const $clearBtn = $('#clear-btn');
         const $drawBtn = $('#draw-btn')
         const $rectangleBtn = $('#rectangle-btn')
+        const $eraseBtn = $('#erase-btn')
 
         const ctx = $canvas.getContext('2d');
 
@@ -179,6 +180,9 @@
 
         $colorPicker.addEventListener('change', handleChangeColor);
         $clearBtn.addEventListener('click', clearCanvas);
+        $eraseBtn.addEventListener('click', () => {
+            setMode(MODES.ERASE)
+        })
 
         $rectangleBtn.addEventListener('click', () => {
             setMode(MODES.RECTANGLE)
@@ -212,7 +216,7 @@
             //extrayendo los datos de donde esta el mouse ahora mismo.
             const { offsetX, offsetY } = event
 
-            if (mode === MODES.DRAW) {
+            if (mode === MODES.DRAW || mode === MODES.ERASE) {
 
                 // console.log(offsetX, offsetY);
 
@@ -236,7 +240,7 @@
                 return;
             }
 
-            if (mode == MODES.RECTANGLE) {
+            if (mode === MODES.RECTANGLE) {
 
                 ctx.putImageData(imageData, 0, 0);
 
@@ -248,6 +252,7 @@
                 ctx.stroke()
                 return
             }
+
 
         }
 
@@ -272,13 +277,23 @@
 
             if (mode === MODES.DRAW) {
                 $drawBtn.classList.add('active')
+                ctx.globalCompositeOperation = 'source-over';
                 // canvas.style.cursor = 'crosshair';
-                // ctx.lineWidth = 3;
+                ctx.lineWidth = 2;
                 return
             }
 
             if (mode === MODES.RECTANGLE) {
                 $rectangleBtn.classList.add('active')
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.lineWidth = 2;
+                return
+            }
+
+            if (mode === MODES.ERASE) {
+                $eraseBtn.classList.add('active');
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.lineWidth = 20;
                 return
             }
         }
@@ -287,6 +302,7 @@
         // INIT
 
         setMode(MODES.DRAW);
+        ctx.lineWidth = 3;
     </script>
 </head>
 
