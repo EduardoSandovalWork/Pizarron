@@ -130,15 +130,29 @@
             background-size: 18px;
         }
 
+        /* ========== Implementar en el futuro ===========*/
+        #ellipse-btn {
+            display: none;
+        }
+
+        #picker-btn {
+            display: none;
+        }
+
+        /* #picker-btn va a ser un modo picker que va a permitir al usuario elegir un color de cualquier lugar de la pantalla.
+        
+        Al momento de escribir esto hay un 75% de usuarios que no tienen soporte a esta herramienta.*/
+        /* =======================================*/
+
         #clear-btn {
             background-image: url('./icons/trash.png');
             background-size: 18px;
         }
 
         /* ===PENDIENTE=== */
-        /* ponele que cuando haces hover se ponga pointer */
+        /* ponele que cuando haces hover se ponga pointer y otras cositas mas*/
         /* hacer un stroke-width picker asi como el color picker */
-        /* hacer un array para borrar cronologicamente  con una flechita nomas*/
+        /* hacer un array para borrar cronologicamente con una flechita nomas*/
     </style>
     <script type="module">
         //CONSTANTS
@@ -178,8 +192,10 @@
         $canvas.addEventListener('mouseup', stopDrawing);
         $canvas.addEventListener('mouseleave', stopDrawing);
 
-        $colorPicker.addEventListener('change', handleChangeColor);
-        $clearBtn.addEventListener('click', clearCanvas);
+        $drawBtn.addEventListener('click', () => {
+            setMode(MODES.DRAW)
+        })
+
         $eraseBtn.addEventListener('click', () => {
             setMode(MODES.ERASE)
         })
@@ -188,9 +204,9 @@
             setMode(MODES.RECTANGLE)
         })
 
-        $drawBtn.addEventListener('click', () => {
-            setMode(MODES.DRAW)
-        })
+
+        $clearBtn.addEventListener('click', clearCanvas);
+        $colorPicker.addEventListener('change', handleChangeColor);
 
         function startDrawing(event) {
             isDrawing = true
@@ -302,7 +318,7 @@
         // INIT
 
         setMode(MODES.DRAW);
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2;
     </script>
 </head>
 
